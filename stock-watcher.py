@@ -43,7 +43,7 @@ def update_light(light, bid_price, open_price):
         light.alert = 'select'
 
 
-def execute():
+def main():
     a = ally.Ally()
     b = Bridge(os.getenv('HUE_BRIDGE_IP'))
     b.connect()
@@ -73,4 +73,4 @@ def execute():
 
 
 if __name__ == '__main__':
-    execute()
+    main()
