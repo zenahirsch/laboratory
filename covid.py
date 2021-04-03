@@ -8,8 +8,8 @@ def main():
 
     def get_covid_data(yesterday=False, two_days_ago=False):
         payload = {
-            'yesterday': yesterday,
-            'twoDaysAgo': two_days_ago,
+            'yesterday': 'true' if yesterday else 'false',
+            'twoDaysAgo': 'true' if two_days_ago else 'false',
         }
 
         r = requests.get('https://disease.sh/v3/covid-19/all', params=payload)

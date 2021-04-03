@@ -2,9 +2,7 @@ import os
 from time import sleep
 import ally
 from phue import Bridge
-from dotenv import load_dotenv
 
-load_dotenv()
 
 SYMBOL = 'ge'
 LIGHT_NAME = 'Unfinished room light'
@@ -47,7 +45,7 @@ def update_light(light, bid_price, open_price):
 
 def execute():
     a = ally.Ally()
-    b = Bridge(os.getenv('BRIDGE_IP'))
+    b = Bridge(os.getenv('HUE_BRIDGE_IP'))
     b.connect()
 
     light_names = b.get_light_objects('name')
