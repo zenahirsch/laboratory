@@ -25,6 +25,9 @@ def hue(bid_price, open_price):
 
 
 def saturation(bid_price, open_price):
+    if not open_price:
+        return MAX_SAT
+
     diff = bid_price - open_price
     percent_change = round(abs(diff / open_price), 3)
     new_sat = (int((MAX_SAT - MIN_SAT) * percent_change) * 10) + MIN_SAT
