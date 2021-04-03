@@ -1,20 +1,21 @@
-from lifxlan import Light
 import requests
+from lifxlan import Light
+
+
+def get_covid_data(yesterday=False, two_days_ago=False):
+    payload = {
+        'yesterday': 'true' if yesterday else 'false',
+        'twoDaysAgo': 'true' if two_days_ago else 'false',
+    }
+
+    r = requests.get('https://disease.sh/v3/covid-19/all', params=payload)
+    data = r.json()
+    return data
 
 
 def main():
     blastoise = Light("d0:73:d5:64:f7:cf", "192.168.86.26")
     print(blastoise)
-
-    def get_covid_data(yesterday=False, two_days_ago=False):
-        payload = {
-            'yesterday': 'true' if yesterday else 'false',
-            'twoDaysAgo': 'true' if two_days_ago else 'false',
-        }
-
-        r = requests.get('https://disease.sh/v3/covid-19/all', params=payload)
-        data = r.json()
-        return data
 
     yesterday_data = get_covid_data(yesterday=True)
     two_days_ago_data = get_covid_data(two_days_ago=True)

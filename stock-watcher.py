@@ -1,8 +1,8 @@
 import os
 from time import sleep
+
 import ally
 from phue import Bridge
-
 
 SYMBOL = 'ge'
 LIGHT_NAME = 'Unfinished room light'
