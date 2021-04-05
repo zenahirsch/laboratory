@@ -67,8 +67,6 @@ def main():
         update_light(light, bid_price, open_price)
 
         for quote in a.stream(SYMBOL):
-            print(open_price)
-            print(quote)
             bid_price = float(quote['bid'])
             update_light(light, bid_price, open_price)
     finally:
