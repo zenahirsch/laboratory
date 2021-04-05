@@ -26,7 +26,8 @@ def main():
     print('two days ago:', two_days_ago_cases)
 
     blastoise.set_power('on')
-    blastoise.set_brightness(45000)
+    blastoise.set_brightness(3000)
+    blastoise.set_saturation(55000)
 
     if yesterday_cases < two_days_ago_cases:
         print('green')
