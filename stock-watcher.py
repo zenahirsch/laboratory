@@ -57,23 +57,26 @@ def main():
     light_names = b.get_light_objects('name')
     light = light_names[LIGHT_NAME]
 
+    light.on = True
+    light.brightness = BRIGHTNESS
+    light.hue = BLUE
+
+    quotes = a.quote(symbols=SYMBOL, fields=['opn', 'bid'], dataframe=False)
+
+    open_price = float(quotes[0]['opn'])
+    bid_price = float(quotes[0]['bid'])
+
+    update_light(light, bid_price, open_price)
+
     try:
-        light.on = True
-        light.brightness = BRIGHTNESS
-        light.hue = BLUE
-
-        quotes = a.quote(symbols=SYMBOL, fields=['opn', 'bid'], dataframe=False)
-
-        open_price = float(quotes[0]['opn'])
-        bid_price = float(quotes[0]['bid'])
-
-        update_light(light, bid_price, open_price)
-
         for quote in a.stream(SYMBOL):
             bid_price = float(quote['bid'])
             update_light(light, bid_price, open_price)
-    finally:
-        light.on = False
+    except:
+        light.hue = RED
+        light.saturation = MAX_SAT
+        light.alert = 'lselect'
+        raise
 
 
 if __name__ == '__main__':
