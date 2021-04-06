@@ -16,6 +16,9 @@ BRIGHTNESS = 30
 
 
 def hue(bid_price, open_price):
+    if bid_price == 0:  # outside market hours
+        return BLUE
+
     if bid_price > open_price:
         return GREEN
     elif bid_price < open_price:
