@@ -89,8 +89,8 @@ def check_weather():
 
     timelines = weather['data']['timelines']
     intervals = timelines[0]['intervals']
-    now = intervals[0]['values']
-    next = intervals[1]['values']
+    now = round(intervals[0]['values'])
+    next = round(intervals[1]['values'])
 
     update_light(now['temperature'], next['temperature'], next['precipitationProbability'])
 
