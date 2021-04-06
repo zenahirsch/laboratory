@@ -89,10 +89,10 @@ def check_weather():
 
     timelines = weather['data']['timelines']
     intervals = timelines[0]['intervals']
-    now = round(intervals[0]['values'])
-    next = round(intervals[1]['values'])
+    now = intervals[0]['values']
+    next = intervals[1]['values']
 
-    update_light(now['temperature'], next['temperature'], next['precipitationProbability'])
+    update_light(round(now['temperature']), round(next['temperature']), next['precipitationProbability'])
 
 
 scheduler.add_job(func=check_weather, trigger='interval', seconds=CRON_INTERVAL_SEC, coalesce=True,
