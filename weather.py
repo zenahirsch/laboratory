@@ -12,9 +12,9 @@ from lifxlan import Light
 from requests.exceptions import HTTPError
 
 LOCATION = '606b30f5fa596500089fcbff'  # Home
-CRON_INTERVAL_SEC = 120  # How often to run check_weather in background
+CRON_INTERVAL_SEC = 300  # How often to run check_weather in background
 TIMESTEPS = '1h'  # timeline interval
-PRECIPITATION_PROBABILITY_THRESHOLD = 40  # Percent change of rain must be above this to notify
+PRECIPITATION_PROBABILITY_THRESHOLD = 15  # Percent change of rain must be above this to notify
 
 COLOR_COOLER = [29814, 65535, 3000, 3500]
 COLOR_WARMER = [58275, 65535, 3000, 3500]
