@@ -12,7 +12,7 @@ GREEN = 25500
 BLUE = 46920
 MIN_SAT = 170
 MAX_SAT = 254
-BRIGHTNESS = 30
+BRIGHTNESS = 10
 
 
 def hue(bid_price, open_price):
