@@ -1,3 +1,4 @@
+from time import sleep
 import ally
 from lights import charizard
 from colors import DIM_RED, DIM_BLUE, DIM_CYAN, DIM_GREEN, BRIGHT_RED
@@ -43,6 +44,7 @@ def main():
             update_light(bid_price=bid_price, open_price=open_price)
     except:
         update_light(error=True)
+        sleep(5)
         raise
 
 
