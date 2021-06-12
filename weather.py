@@ -47,8 +47,6 @@ def update_light(now_temp, next_temp, precipitation_probability):
     print(f"Updating light: {now_temp} | {next_temp} | {precipitation_probability}")
     likely_to_rain = precipitation_probability > PRECIPITATION_PROBABILITY_THRESHOLD
 
-    bulbasaur.set_power('on')
-
     if now_temp > next_temp:
         print('Getting cooler')
         bulbasaur.set_color(COLOR_COOLER)
@@ -94,6 +92,8 @@ def check_weather():
 
     update_light(round(now['temperature']), round(next['temperature']), next['precipitationProbability'])
 
+
+bulbasaur.set_power('on')
 
 scheduler.add_job(func=check_weather, trigger='interval', seconds=CRON_INTERVAL_SEC, coalesce=True,
                   next_run_time=datetime.now(), id='check_weather')
