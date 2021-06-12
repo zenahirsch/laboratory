@@ -37,10 +37,6 @@ def main():
     print('yesterday:', yesterday_cases)
     print('two days ago:', two_days_ago_cases)
 
-    blastoise.set_power('on')
-    blastoise.set_brightness(3000)
-    blastoise.set_saturation(55000)
-
     if yesterday_cases < two_days_ago_cases:
         print('green')
         blastoise.set_hue(16173, 1000)
@@ -51,6 +47,9 @@ def main():
         print('blue')
         blastoise.set_hue(29814, 1000)
 
+blastoise.set_power('on')
+blastoise.set_brightness(3000)
+blastoise.set_saturation(55000)
 
 scheduler.add_job(func=main, trigger='interval', seconds=CRON_INTERVAL_SEC, coalesce=True,
                   next_run_time=datetime.now(), id='main')
