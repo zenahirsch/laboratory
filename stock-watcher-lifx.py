@@ -45,10 +45,11 @@ def main():
     except:
         update_light(error=True)
         sleep(5)
-        charizard.set_power('off')
-        sleep(5)
         raise
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        charizard.set_power('off')
