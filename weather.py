@@ -8,8 +8,9 @@ from time import sleep
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
-from lifxlan import Light
 from requests.exceptions import HTTPError
+
+from lights import bulbasaur
 
 LOCATION = '606b30f5fa596500089fcbff'  # Home
 CRON_INTERVAL_SEC = 300  # How often to run check_weather in background
@@ -22,7 +23,6 @@ COLOR_SAME = [16173, 65535, 3000, 3500]
 COLOR_RAIN = [43634, 65535, 3000, 3500]
 COLOR_ERROR = [65535, 65535, 3000, 3500]
 
-bulbasaur = Light('d0:73:d5:65:ac:9b', '192.168.86.20')
 scheduler = BackgroundScheduler()
 
 

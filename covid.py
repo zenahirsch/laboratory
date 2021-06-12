@@ -1,6 +1,6 @@
 import requests
-from lifxlan import Light
 
+from lights import blastoise
 
 def get_covid_data(yesterday=False, two_days_ago=False):
     payload = {
@@ -14,7 +14,6 @@ def get_covid_data(yesterday=False, two_days_ago=False):
 
 
 def main():
-    blastoise = Light("d0:73:d5:64:f7:cf", "192.168.86.26")
     print(blastoise)
 
     yesterday_data = get_covid_data(yesterday=True)
