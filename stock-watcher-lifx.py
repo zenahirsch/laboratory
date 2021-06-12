@@ -1,5 +1,8 @@
 from time import sleep
+import atexit
+
 import ally
+
 from lights import charizard
 from colors import DIM_RED, DIM_BLUE, DIM_CYAN, DIM_GREEN, BRIGHT_RED
 
@@ -43,14 +46,13 @@ def main():
             bid_price = float(quote['bid'])
             update_light(bid_price=bid_price, open_price=open_price)
     except:
+        print('there was an error')
         update_light(error=True)
+        print('sleeping...')
         sleep(5)
         raise
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except:
-        print('error')
-        charizard.set_power('off')
+    atexit.register(lambda: charizard.set_power('off'))
+    main()
