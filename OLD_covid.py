@@ -1,21 +1,6 @@
-#!/usr/bin/python3
-
-import atexit
-import os
-from datetime import datetime
-from time import sleep
-
 import requests
-from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask
-from requests.exceptions import HTTPError
 
 from lights import blastoise
-
-CRON_INTERVAL_SEC = 300  # How often to run covid check in background
-
-scheduler = BackgroundScheduler()
-
 
 def get_covid_data(yesterday=False, two_days_ago=False):
     payload = {
@@ -54,23 +39,5 @@ def main():
         blastoise.set_hue(29814, 1000)
 
 
-scheduler.add_job(func=main, trigger='interval', seconds=CRON_INTERVAL_SEC, coalesce=True,
-                  next_run_time=datetime.now(), id='check_weather')
-scheduler.start()
-
-# when app stops running
-atexit.register(lambda: scheduler.shutdown())
-atexit.register(lambda: blastoise.set_power('off'))
-
-app = Flask(__name__)
-
-
-@app.route('/laboratory/covid', methods=['POST'])
-def respond():
-    return {
-        'message': 'This will do something with the light!'
-    }
-
-
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
+    main()
