@@ -45,6 +45,8 @@ def main():
     except:
         update_light(error=True)
         sleep(5)
+        charizard.set_power('off')
+        sleep(5)
         raise
 
 
