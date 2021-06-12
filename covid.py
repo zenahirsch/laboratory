@@ -29,8 +29,6 @@ def get_covid_data(yesterday=False, two_days_ago=False):
 
 
 def main():
-    print(blastoise)
-
     yesterday_data = get_covid_data(yesterday=True)
     two_days_ago_data = get_covid_data(two_days_ago=True)
     yesterday_cases = yesterday_data['todayCases']
@@ -55,7 +53,7 @@ def main():
 
 
 scheduler.add_job(func=main, trigger='interval', seconds=CRON_INTERVAL_SEC, coalesce=True,
-                  next_run_time=datetime.now(), id='check_weather')
+                  next_run_time=datetime.now(), id='main')
 scheduler.start()
 
 # when app stops running
@@ -73,4 +71,4 @@ def respond():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5001)
