@@ -4,7 +4,7 @@ import atexit
 import ally
 
 from lights import charizard
-from colors import DIM_RED, DIM_BLUE, DIM_CYAN, DIM_GREEN, BRIGHT_RED
+from colors import DIM_RED, DIM_BLUE, DIM_CYAN, DIM_GREEN, MID_RED
 
 SYMBOL = 'vmeo'
 
@@ -12,7 +12,7 @@ SYMBOL = 'vmeo'
 def update_light(error=False, bid_price=0, open_price=0):
     if error:
         charizard.set_color(DIM_RED)
-        charizard.set_waveform(is_transient=False, color=BRIGHT_RED, period=1000, cycles=5, duty_cycle=1,
+        charizard.set_waveform(is_transient=False, color=MID_RED, period=1000, cycles=5, duty_cycle=1,
                                waveform=1)
         return
 
