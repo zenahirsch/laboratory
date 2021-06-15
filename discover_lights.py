@@ -6,6 +6,3 @@ lan = LifxLAN(NUM_LIGHTS)
 
 for light in lan.get_lights():
     print(light)
-
-light = lan.get_device_by_name('Charizard')
-print(light)
