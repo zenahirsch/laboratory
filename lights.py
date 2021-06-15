@@ -1,6 +1,10 @@
-from lifxlan import Light
+from lifxlan import LifxLAN
 
-charizard = Light('d0:73:d5:65:df:d4', '192.168.86.50')
-bulbasaur = Light('d0:73:d5:65:ac:9b', '192.168.86.20')
-blastoise = Light("d0:73:d5:64:f7:cf", "192.168.86.26")
+NUM_LIGHTS = 3
+
+lan = LifxLAN(NUM_LIGHTS)
+
+charizard = lan.get_device_by_name('Charizard')
+bulbasaur = lan.get_device_by_name('Bulbasaur')
+blastoise = lan.get_device_by_name('Blastoise')
 
