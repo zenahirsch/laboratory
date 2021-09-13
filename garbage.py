@@ -19,7 +19,6 @@ def update_light(is_recycling_week=False, is_pickup_day=False):
         strobe_color = DIM_ORANGE
 
     if is_pickup_day:
-
         # strobe light for 12 hours if it's a pickup day
         pikachu.set_waveform(is_transient=True, color=strobe_color, period=2000, cycles=21600, duty_cycle=1, waveform=4)
 
@@ -29,7 +28,7 @@ def main():
     week_num = today.isocalendar().week
     is_recycling_week = week_num % 2 != 0  # odd weeks are recycling weeks
     is_pickup_day = today.weekday() == 0  # mondays are pickup days
-    print(f"This is week {week_num}. Recycling: {is_recycling_week}")
+    print(f"This is week {week_num}. Recycling: {is_recycling_week}. Pickup day: {is_pickup_day}")
     update_light(is_recycling_week=is_recycling_week, is_pickup_day=is_pickup_day)
 
 
