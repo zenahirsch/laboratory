@@ -1,41 +1,56 @@
 import atexit
 from datetime import datetime, date
+
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
+
 from colors import MUTED_BLUE, MUTED_ORANGE, DIM_BLUE, DIM_ORANGE
 from lights import pikachu
 
 scheduler = BackgroundScheduler()
 
 
-def update_light(is_recycling_week=False, is_pickup_day=False):
+def blink_light(color):
+    pikachu.set_waveform(is_transient=True, color=color, period=2000, cycles=3, duty_cycle=1, waveform=4)
+
+def set_color(color):
+    pikachu.set_color(color)
+
+def update_light(current_hour, is_recycling_week=False, is_pickup_day=False, is_day_before_pickup=False):
     print(f"Updating light")
 
     if is_recycling_week:
-        pikachu.set_color(MUTED_BLUE)
+        set_color(MUTED_BLUE)
         strobe_color = DIM_BLUE
     else:
-        pikachu.set_color(MUTED_ORANGE)
+        set_color(MUTED_ORANGE)
         strobe_color = DIM_ORANGE
 
-    if is_pickup_day:
-        # strobe light for 12 hours if it's a pickup day
-        pikachu.set_waveform(is_transient=True, color=strobe_color, period=2000, cycles=21600, duty_cycle=1, waveform=4)
+    if is_pickup_day and current_hour < 12:  # blink light in the morning of pickup day
+        blink_light(strobe_color)
+
+    if is_day_before_pickup and current_hour > 18:  # blink light in the evening of day before pickup
+        blink_light(strobe_color)
 
 
 def main():
+    current_hour = datetime.now().hour
     today = date.today()
+    weekday = today.weekday()
     week_num = today.isocalendar().week
-    is_recycling_week = week_num % 2 != 0  # odd weeks are recycling weeks
-    is_pickup_day = today.weekday() == 0  # mondays are pickup days
-    print(f"This is week {week_num}. Recycling: {is_recycling_week}. Pickup day: {is_pickup_day}")
-    update_light(is_recycling_week=is_recycling_week, is_pickup_day=is_pickup_day)
+    is_recycling_week = week_num % 2 == 0  # even weeks are recycling weeks
+    is_pickup_day = weekday == 0  # mondays are pickup days
+    is_day_before_pickup = weekday == 6  # sunday is day before pickup day
+    print(f"Hour: {current_hour}. Week num: {week_num}. Recycling: {is_recycling_week}. Pickup day: {is_pickup_day}")
+    update_light(is_recycling_week=is_recycling_week, is_pickup_day=is_pickup_day,
+                 is_day_before_pickup=is_day_before_pickup, current_hour=current_hour)
 
 
 pikachu.set_power('on')
 
-scheduler.add_job(func=main, trigger='cron', day_of_week='*', hour=0, minute=0, coalesce=True,
-                  next_run_time=datetime.now(), timezone='America/Detroit', id='check_garbage')
+# Cron runs every five minutes
+scheduler.add_job(func=main, trigger='cron', minute='*/5', coalesce=True, next_run_time=datetime.now(),
+                  timezone='America/Detroit', id='check_garbage')
 
 scheduler.start()
 
